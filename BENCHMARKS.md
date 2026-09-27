@@ -36,4 +36,4 @@ Symlink traversal, cloud downloads, and crossing mount points are excluded by sc
 The filesystem remains live; this is not an atomic snapshot benchmark.
 
 Cached-index startup and fresh scanning are separate metrics. Cached results must never be reported as fresh scans.
-The optimization work continues in `autoresearch.md`.
+The experimental workflow was removed; its measured findings remain in `docs/scanner-research.md`.
