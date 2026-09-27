@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.scriptc/
+.scratch/
+artifacts/local/
+.DS_Store
+.fallow/

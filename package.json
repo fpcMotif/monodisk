@@ -1,0 +1,29 @@
+{
+  "name": "monodisk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun scripts/build.ts && scriptc build src/main.ts --ffi native/ffi.json -o dist/monodisk",
+    "test": "bun test",
+    "test:native": "clang++ -std=c++20 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer native/scan.cpp native/tests.cpp -o dist/native-tests && ./dist/native-tests",
+    "typecheck": "tsc --noEmit",
+    "lint:boundaries": "depcruise src",
+    "check": "bun run typecheck && bun run lint && bun run format:check && bun run lint:boundaries && bun run quality && bun test",
+    "lint": "oxlint --type-aware --deny-warnings src scripts",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "quality": "fallow --fail-on-issues",
+    "bench": "bun scripts/benchmark.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.2",
+    "dependency-cruiser": "^18.4.0",
+    "fallow": "^3.30.0",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "scriptc": "^0.1.6",
+    "typescript": "6"
+  }
+}

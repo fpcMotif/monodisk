@@ -1,0 +1,5 @@
+dist/
+.scriptc/
+.scratch/
+artifacts/local/
+bun.lock

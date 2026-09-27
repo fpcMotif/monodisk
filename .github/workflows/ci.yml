@@ -1,0 +1,17 @@
+name: verify
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  macos:
+    runs-on: macos-15
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v3
+      - run: mise run install
+      - run: mise run check
+      - run: mise run build
+      - run: mise run test-native
+      - run: mise run test-terminal

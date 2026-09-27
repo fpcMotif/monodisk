@@ -1,0 +1,86 @@
+{
+  "ffi_format": 3,
+  "functions": [
+    { "name": "mdWait", "symbol": "md_wait", "params": [], "returns": "void" },
+    {
+      "name": "mdStart",
+      "symbol": "md_start",
+      "params": ["string", "u32"],
+      "returns": "i32"
+    },
+    {
+      "name": "mdStatus",
+      "symbol": "md_status",
+      "params": ["u32"],
+      "returns": "f64"
+    },
+    {
+      "name": "mdStop",
+      "symbol": "md_stop",
+      "params": [],
+      "returns": "void"
+    },
+    {
+      "name": "mdChildren",
+      "symbol": "md_children",
+      "params": [
+        "u32",
+        {
+          "callback": {
+            "id": "row",
+            "params": [
+              "u32",
+              "string",
+              "f64",
+              "f64",
+              "f64",
+              "u32",
+              "u32",
+              {
+                "context": "row"
+              }
+            ],
+            "returns": "void",
+            "lifetime": "call"
+          }
+        },
+        {
+          "context": "row"
+        }
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "mdParent",
+      "symbol": "md_parent",
+      "params": ["u32"],
+      "returns": "u32"
+    },
+    {
+      "name": "mdTrash",
+      "symbol": "md_trash",
+      "params": ["u32"],
+      "returns": "i32"
+    },
+    {
+      "name": "mdTerminal",
+      "symbol": "md_terminal",
+      "params": ["u32"],
+      "returns": "void"
+    },
+    {
+      "name": "mdDimension",
+      "symbol": "md_dimension",
+      "params": ["u32"],
+      "returns": "u32"
+    },
+    {
+      "name": "mdKey",
+      "symbol": "md_key",
+      "params": ["u32"],
+      "returns": "i32"
+    }
+  ],
+  "libraries": ["../dist/libscan.a"],
+  "system_libraries": ["c++"]
+}
