@@ -47,8 +47,11 @@ The development-workspace sample showed an 11.8% reduction with exact totals.
 
 ## Next experiments
 
-Instrument worker CPU time and metadata, parsing, allocation, scheduling, and aggregation phases.
-Study FFF's native walking, indexing, and watcher implementations from primary source.
-Measure parent-relative directory descriptors against repeated path resolution.
+Compile-time profiling identifies directory opens and bulk reads as the dominant phases.
+Parent-handle reuse and smaller buffers were tested, then discarded for insufficient benefit.
+A worker sweep retained eight workers; extra workers did not improve this workload.
+See `docs/scanner-research.md` and `artifacts/research/` for methods and results.
+
+Investigate filesystem-level enumeration alternatives without weakening completeness or permission behavior.
 Measure compact metadata layouts and batch scheduling against the current arena model.
 Only implement persistent or incremental indexing with explicit freshness and independently measured startup.

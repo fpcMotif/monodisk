@@ -28,6 +28,19 @@
 #include <unordered_map>
 #include <vector>
 
+#ifdef MD_PROFILE
+struct Profile {
+  uint64_t path = 0, open = 0, bulk = 0, parse = 0, close = 0;
+  uint64_t directories = 0, calls = 0;
+};
+static thread_local Profile profile;
+static std::mutex profile_lock;
+static uint64_t ticks() { return clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW); }
+#define TIMED(field, expression) do { auto before = ticks(); expression; profile.field += ticks() - before; } while (false)
+#else
+#define TIMED(field, expression) do { expression; } while (false)
+#endif
+
 // Worker arenas retain packed names and child arrays until the next scan.
 struct Node {
   std::string_view name;
@@ -125,9 +138,15 @@ static bool parse(const char* bytes, size_t length, Node& out, std::pmr::monoton
 
 static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>& scratch, std::pmr::monotonic_buffer_resource& arena, std::string& path) {
   scratch.clear();
-  relative_path(n, path);
-  int fd = openat(root_fd, path.c_str(), O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC);
+  TIMED(path, relative_path(n, path));
+  int fd;
+  TIMED(open, fd = openat(root_fd, path.c_str(), O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC));
+#ifdef MD_PROFILE
+  ++profile.directories;
+#endif
   if (fd < 0) { incomplete(n); return; }
+  // Own the descriptor through parsing and allocation failures.
+  struct Close { int fd; ~Close() { if (fd >= 0) close(fd); } } opened{fd};
   bool identity_verified = false;
   struct attrlist attrs{};
   attrs.bitmapcount = ATTR_BIT_MAP_COUNT;
@@ -137,7 +156,12 @@ static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>
   attrs.fileattr = ATTR_FILE_LINKCOUNT | ATTR_FILE_TOTALSIZE | ATTR_FILE_ALLOCSIZE;
   for (;;) {
     if (cancelled) { n->complete = false; break; }
-    int count = getattrlistbulk(fd, &attrs, buffer.data(), buffer.size(), 0);
+    int count;
+    TIMED(bulk, count = getattrlistbulk(fd, &attrs, buffer.data(), buffer.size(), 0));
+#ifdef MD_PROFILE
+    ++profile.calls;
+    auto parse_start = ticks();
+#endif
     if (count <= 0) { if (count < 0) incomplete(n); break; }
     size_t offset = 0;
     for (int i = 0; i < count; ++i) {
@@ -151,7 +175,7 @@ static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>
       if (!(returned.commonattr & ATTR_CMN_PARENTID) && !identity_verified) {
         struct stat st{};
         if (fstat(fd, &st) || st.st_ino != n->inode || uint32_t(st.st_dev) != n->device) {
-          close(fd); incomplete(n); return;
+          incomplete(n); return;
         }
         identity_verified = true;
       }
@@ -163,8 +187,11 @@ static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>
       } else incomplete(n);
       offset += length;
     }
+#ifdef MD_PROFILE
+    profile.parse += ticks() - parse_start;
+#endif
   }
-  close(fd);
+  TIMED(close, close(fd)); opened.fd = -1;
   if (!scratch.empty()) {
     n->kids = static_cast<Node*>(arena.allocate(scratch.size() * sizeof(Node), alignof(Node)));
     memcpy(n->kids, scratch.data(), scratch.size() * sizeof(Node));
@@ -185,7 +212,15 @@ static void worker(std::pmr::monotonic_buffer_resource* arena) {
       ++waiting_workers;
       ready.wait(guard, [] { return !queue.empty() || exhausted; });
       --waiting_workers;
-      if (exhausted) return;
+      if (exhausted) {
+#ifdef MD_PROFILE
+        std::lock_guard output(profile_lock);
+        fprintf(stderr, "profile directories=%llu calls=%llu path_ms=%.3f open_ms=%.3f bulk_ms=%.3f parse_ms=%.3f close_ms=%.3f node_bytes=%zu\n",
+          (unsigned long long)profile.directories, (unsigned long long)profile.calls,
+          profile.path / 1e6, profile.open / 1e6, profile.bulk / 1e6, profile.parse / 1e6, profile.close / 1e6, sizeof(Node));
+#endif
+        return;
+      }
       local.push_back(queue.back()); queue.pop_back(); ++busy_workers;
     }
     while (!local.empty()) {
@@ -275,7 +310,13 @@ extern "C" int md_start(const uint8_t* input, size_t length, uint32_t threads) {
       }
       catch (...) { cancelled = true; failure = EAGAIN; }
       for (auto& t : workers) t.join();
+#ifdef MD_PROFILE
+      auto finish_start = std::chrono::steady_clock::now();
+#endif
       finish();
+#ifdef MD_PROFILE
+      fprintf(stderr, "profile finish_ms=%.3f\n", std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - finish_start).count());
+#endif
     } catch (...) { failure = ENOMEM; }
     elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
     done = true;

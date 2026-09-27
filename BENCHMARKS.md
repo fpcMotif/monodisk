@@ -24,6 +24,8 @@ Earlier five-run Applications batches were mixed and sometimes favored BlitzTree
 The small Applications advantage is insufficient for the requested order-of-magnitude improvement.
 The original 3.1-million-entry home-folder workload has not been reproduced.
 Raw Applications data: `artifacts/applications-validation.json`; an earlier mixed batch remains in `artifacts/applications-benchmark.json`.
+Raw development-workspace data: `artifacts/devv-validation.json`.
+The [scanner investigation](docs/scanner-research.md) records profiling, parent-handle reuse, buffer sizing, and worker scaling.
 
 ## Scope
 
