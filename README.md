@@ -86,3 +86,16 @@ mise run bench -- /Applications /path/to/blitztree/target/release/bench artifact
 The harness warms both tools, alternates five runs, and compares process-wall medians.
 Its success gate requires identical file counts, entry counts, allocated bytes, and zero scan errors.
 See [BENCHMARKS.md](BENCHMARKS.md) for measured results and limits.
+
+## Style reference
+
+`vendor/gpuix` is a Git submodule of [remorses/gpuix](https://github.com/remorses/gpuix), licensed Apache-2.0.
+Its `disktree/` folder ports [tobi/disktree](https://github.com/tobi/disktree), licensed MIT.
+We study its visual style only. Monodisk does not import, build, or ship it.
+Keep upstream code in the submodule; do not copy it into `src/` or `native/`.
+
+```sh
+git submodule update --init vendor/gpuix
+```
+
+Oxfmt, Fallow, and `bun test` skip `vendor/`.

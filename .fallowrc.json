@@ -1,4 +1,5 @@
 {
   "entry": ["src/main.ts", "scripts/*.ts", "src/**/tests/*.test.ts"],
+  "ignorePatterns": ["vendor/**"],
   "rules": { "boundary-violation": "off", "policy-violation": "off" }
 }
