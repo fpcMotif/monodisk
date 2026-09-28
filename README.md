@@ -89,13 +89,18 @@ See [BENCHMARKS.md](BENCHMARKS.md) for measured results and limits.
 
 ## Style reference
 
-`vendor/gpuix` is a Git submodule of [remorses/gpuix](https://github.com/remorses/gpuix), licensed Apache-2.0.
-Its `disktree/` folder ports [tobi/disktree](https://github.com/tobi/disktree), licensed MIT.
-We study its visual style only. Monodisk does not import, build, or ship it.
-Keep upstream code in the submodule; do not copy it into `src/` or `native/`.
+Two Git submodules hold unmodified upstream code for style study:
+
+- `vendor/disktree` is [tobi/disktree](https://github.com/tobi/disktree), a Rust and GPUI treemap, licensed MIT.
+- `vendor/gpuix` is [remorses/gpuix](https://github.com/remorses/gpuix), licensed Apache-2.0. Its `disktree/` folder is a React port of tobi/disktree.
+
+Monodisk does not import, build, or ship either one.
+Keep upstream code in its submodule; do not copy it into `src/` or `native/`.
 
 ```sh
-git submodule update --init vendor/gpuix
+git submodule update --init vendor/disktree vendor/gpuix
+mise exec -- mbx build --release --manifest-path vendor/disktree/Cargo.toml -p disktree-app
+bunx disktree@0.2.0
 ```
 
 Oxfmt, Fallow, and `bun test` skip `vendor/`.
