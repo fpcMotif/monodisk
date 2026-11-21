@@ -128,6 +128,8 @@ static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>
   relative_path(n, path);
   int fd = openat(root_fd, path.c_str(), O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC);
   if (fd < 0) { incomplete(n); return; }
+  // Own the descriptor through parsing and allocation failures.
+  struct Close { int fd; ~Close() { if (fd >= 0) close(fd); } } opened{fd};
   bool identity_verified = false;
   struct attrlist attrs{};
   attrs.bitmapcount = ATTR_BIT_MAP_COUNT;
@@ -151,7 +153,7 @@ static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>
       if (!(returned.commonattr & ATTR_CMN_PARENTID) && !identity_verified) {
         struct stat st{};
         if (fstat(fd, &st) || st.st_ino != n->inode || uint32_t(st.st_dev) != n->device) {
-          close(fd); incomplete(n); return;
+          incomplete(n); return;
         }
         identity_verified = true;
       }
@@ -164,7 +166,7 @@ static void read_directory(Node* n, std::vector<char>& buffer, std::vector<Node>
       offset += length;
     }
   }
-  close(fd);
+  close(fd); opened.fd = -1;
   if (!scratch.empty()) {
     n->kids = static_cast<Node*>(arena.allocate(scratch.size() * sizeof(Node), alignof(Node)));
     memcpy(n->kids, scratch.data(), scratch.size() * sizeof(Node));

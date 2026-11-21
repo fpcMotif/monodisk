@@ -86,3 +86,21 @@ mise run bench -- /Applications /path/to/blitztree/target/release/bench artifact
 The harness warms both tools, alternates five runs, and compares process-wall medians.
 Its success gate requires identical file counts, entry counts, allocated bytes, and zero scan errors.
 See [BENCHMARKS.md](BENCHMARKS.md) for measured results and limits.
+
+## Style reference
+
+Two Git submodules hold unmodified upstream code for style study:
+
+- `vendor/disktree` is [tobi/disktree](https://github.com/tobi/disktree), a Rust and GPUI treemap, licensed MIT.
+- `vendor/gpuix` is [remorses/gpuix](https://github.com/remorses/gpuix), licensed Apache-2.0. Its `disktree/` folder is a React port of tobi/disktree.
+
+Monodisk does not import, build, or ship either one.
+Keep upstream code in its submodule; do not copy it into `src/` or `native/`.
+
+```sh
+git submodule update --init vendor/disktree vendor/gpuix
+mise exec -- mbx build --release --manifest-path vendor/disktree/Cargo.toml -p disktree-app
+bunx disktree@0.2.0
+```
+
+Oxfmt, Fallow, and `bun test` skip `vendor/`.

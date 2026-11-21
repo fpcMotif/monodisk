@@ -8,5 +8,6 @@
 
 The functional baseline is implemented and locally verified, including confirmed bulk Trash operations.
 Initial comparisons show small wins with matching counts and totals. The user requires a substantially larger improvement.
-Continue hardware and architecture experiments using `autoresearch.md` before claiming the performance objective is achieved.
+The experimental workflow was removed after its trials showed no substantial improvement.
+The requested larger performance improvement remains unachieved.
 Published timings from another computer cannot establish this result.

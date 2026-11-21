@@ -1,0 +1,349 @@
+{
+  "date": "2026-09-27T10:28:21.656Z",
+  "machine": "Apple M4 Pro",
+  "cores": 12,
+  "os": "27.2.0",
+  "rounds": 15,
+  "method": "one warmup each; alternating runs; process wall includes startup and teardown; no filesystem exclusions",
+  "summary": {
+    "matching": true,
+    "faster": true,
+    "monodiskWall": 0.3899878749999998,
+    "blitztreeWall": 0.44210862500000075,
+    "monodiskScan": 0.387175083,
+    "blitztreeScan": 0.439376583,
+    "ratio": 1.133647103772139
+  },
+  "runs": [
+    {
+      "tool": "monodisk",
+      "wall": 0.49346983300000014,
+      "result": {
+        "seconds": 0.490029083,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.5180134169999999,
+      "result": {
+        "seconds": 0.514708458,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.49028774999999997,
+      "result": {
+        "seconds": 0.486726125,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.7497366669999996,
+      "result": {
+        "seconds": 0.746334792,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.5255278749999998,
+      "result": {
+        "seconds": 0.521298959,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.552735917,
+      "result": {
+        "seconds": 0.549577833,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.47991975000000003,
+      "result": {
+        "seconds": 0.476074666,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.4715043330000008,
+      "result": {
+        "seconds": 0.467894666,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.532677917,
+      "result": {
+        "seconds": 0.529578416,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.531535167,
+      "result": {
+        "seconds": 0.528553208,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.4171707910000005,
+      "result": {
+        "seconds": 0.414325542,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.3899878749999998,
+      "result": {
+        "seconds": 0.387175083,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.3757375830000001,
+      "result": {
+        "seconds": 0.372789625,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.43229820800000107,
+      "result": {
+        "seconds": 0.429444875,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.4275562090000003,
+      "result": {
+        "seconds": 0.424809708,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.3840242500000004,
+      "result": {
+        "seconds": 0.381185333,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.3754143750000003,
+      "result": {
+        "seconds": 0.372197833,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.43758150000000023,
+      "result": {
+        "seconds": 0.433557709,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.6105249999999997,
+      "result": {
+        "seconds": 0.606979583,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.4375081250000003,
+      "result": {
+        "seconds": 0.43347775,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.42322158300000046,
+      "result": {
+        "seconds": 0.419580542,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.4330649169999997,
+      "result": {
+        "seconds": 0.430073458,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.43194950000000065,
+      "result": {
+        "seconds": 0.429266625,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.38815779199999995,
+      "result": {
+        "seconds": 0.385289041,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.3718142090000001,
+      "result": {
+        "seconds": 0.3688575,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.44210862500000075,
+      "result": {
+        "seconds": 0.439376583,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.4242305419999993,
+      "result": {
+        "seconds": 0.421575375,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.37806574999999976,
+      "result": {
+        "seconds": 0.3752655,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "monodisk",
+      "wall": 0.3853126659999998,
+      "result": {
+        "seconds": 0.381914917,
+        "files": 246580,
+        "errors": 0,
+        "entries": 283202,
+        "allocated": 17252597760
+      }
+    },
+    {
+      "tool": "blitztree",
+      "wall": 0.46139654100000005,
+      "result": {
+        "seconds": 0.457591042,
+        "files": 246580,
+        "errors": 0,
+        "bytes": 17252597760,
+        "dirs": 36621
+      }
+    }
+  ]
+}
