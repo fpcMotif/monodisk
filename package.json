@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "qa": "bun --no-env-file tools/qa/run.mjs",
+    "qa:check": "bun --no-env-file tools/qa/self-check.mjs",
     "build": "bun scripts/build.ts && scriptc build src/main.ts --ffi native/ffi.json -o dist/monodisk",
     "test": "bun test",
     "test:native": "clang++ -std=c++20 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer native/scan.cpp native/tests.cpp -o dist/native-tests && ./dist/native-tests",
@@ -18,12 +20,12 @@
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",
-    "dependency-cruiser": "^18.4.0",
-    "fallow": "^3.30.0",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
+    "dependency-cruiser": "^18.5.0",
+    "fallow": "^3.32.0",
+    "oxfmt": "^0.72.0",
+    "oxlint": "^1.87.0",
     "oxlint-tsgolint": "^7.0.2003",
-    "scriptc": "^0.1.6",
-    "typescript": "6"
+    "scriptc": "^0.2.6",
+    "typescript": "next"
   }
 }

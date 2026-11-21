@@ -1,0 +1,9 @@
+{
+  "name": "monodisk-study-disktree-style-qa",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "qa": "bun --no-env-file run.mjs",
+    "test": "bun --no-env-file self-check.mjs"
+  }
+}

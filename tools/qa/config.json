@@ -1,0 +1,28 @@
+{
+  "project": "monodisk.study-disktree-style",
+  "surface": "terminal",
+  "choice": "Bun and sanitizer-backed C++ tests, plus the terminal harness",
+  "commands": {
+    "test": {
+      "argv": ["bun", "run", "test"]
+    },
+    "native": {
+      "argv": ["mise", "run", "test-native"]
+    },
+    "terminal": {
+      "argv": ["mise", "run", "test-terminal"]
+    },
+    "check": {
+      "argv": ["bun", "run", "check"]
+    },
+    "build": {
+      "argv": ["bun", "run", "build"]
+    },
+    "doctor": {
+      "argv": ["mise", "exec", "--", "bun", "--version"]
+    },
+    "harness:check": {
+      "argv": ["bun", "--no-env-file", "tools/qa/self-check.mjs"]
+    }
+  }
+}
